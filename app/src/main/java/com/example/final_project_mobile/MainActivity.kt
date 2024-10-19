@@ -12,7 +12,6 @@ import androidx.lifecycle.Lifecycle
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.final_project_mobile.core.BaseFragment
 import com.example.final_project_mobile.main.BottomNavItem
-import com.example.final_project_mobile.main.BottomNavScreens
 import com.example.final_project_mobile.main.BottomNavigationContent
 import com.example.final_project_mobile.navigation.AppNavigator
 import com.example.final_project_mobile.navigation.FragmentTransactionAnimation
@@ -47,8 +46,6 @@ class MainActivity :
                 BottomNavigationContent(it, ::goToTab)
             }
         }
-
-        viewModel.router.startFlow(BottomNavScreens.OnboardingScreen)
         goToTab(BottomNavItem.Home)
     }
 
