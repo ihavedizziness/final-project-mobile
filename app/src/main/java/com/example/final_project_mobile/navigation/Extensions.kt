@@ -5,9 +5,11 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import com.example.final_project_mobile.core.utils.className
+import com.example.final_project_mobile.ext.getParcelableCompat
 import com.github.terrakok.cicerone.BackTo
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.Replace
+import com.github.terrakok.cicerone.Router
 import com.github.terrakok.cicerone.Screen
 import com.github.terrakok.cicerone.androidx.FragmentScreen
 import kotlin.reflect.KProperty
@@ -53,4 +55,14 @@ inline fun <reified F : DialogFragment> dialogScreenArg(arg: ScreenArgs, clearCo
     private fun putArgs(fragment: F) = fragment.setArguments(bundleOf(screenKey to arg))
     override fun createDialog(factory: FragmentFactory): DialogFragment = F::class.createInstance().apply(::putArgs)
     operator fun getValue(thisRef: Any?, property: KProperty<*>): DialogScreen = this
+}
+
+inline fun <reified T> Router.setResultListener(key: String, crossinline listener: (value: T?) -> Unit) {
+    this.setResultListener(key) {
+        if (it is T) listener(it) else listener(null)
+    }
+}
+
+inline fun <reified A : ScreenArgs> Fragment.getFragmentArgs() = lazy {
+    requireArguments().getParcelableCompat(this::class.java.name.orEmpty()) as? A ?: error("$this has null arguments")
 }

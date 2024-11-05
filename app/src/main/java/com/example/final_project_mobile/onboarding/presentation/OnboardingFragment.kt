@@ -31,20 +31,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.final_project_mobile.R
-import com.example.final_project_mobile.main.BottomNavScreens
+import com.example.final_project_mobile.core.Action
 import com.example.final_project_mobile.navigation.FlowItemFragment
 import com.example.final_project_mobile.ui.createComposeViewWithAppTheme
 import com.example.final_project_mobile.ui.theme.AppTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class OnBoardingFragment : FlowItemFragment() {
+class OnboardingFragment : FlowItemFragment() {
+
+    private val viewModel: OnboardingViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = createComposeViewWithAppTheme { OnboardingContent(
-        onSkipClicked = { router.startFlow(BottomNavScreens.HomeFlowScreen) }
-    ) }
+    ): View = createComposeViewWithAppTheme {
+        OnboardingContent(
+            onAction = viewModel::dispatch,
+        )
+    }
 
 }
 
@@ -52,7 +57,7 @@ data class OnboardingPageData(val imageRes: Int, val title: String)
 
 @Composable
 fun OnboardingContent(
-    onSkipClicked: () -> Unit,
+    onAction: (Action) -> Unit,
 ) {
     val pagerState = rememberPagerState(pageCount = { 3 })
 
@@ -71,7 +76,7 @@ fun OnboardingContent(
             Text(text = "Skillcinema",fontSize = 18.sp,fontWeight = FontWeight(500))
 
             TextButton(
-                onClick = onSkipClicked,
+                onClick = { onAction.invoke(OnboardingViewModel.OnboardingAction.OnSkipClicked) },
             ) {
                 Text(text = "Пропустить", fontSize = 14.sp, color = Color.Gray)
             }
@@ -116,7 +121,7 @@ fun OnboardingContent(
 @Composable
 fun OnBoardingPreview(){
     OnboardingContent(
-        onSkipClicked = {},
+        onAction = {},
     )
 }
 
