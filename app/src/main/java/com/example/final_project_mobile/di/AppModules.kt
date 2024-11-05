@@ -2,9 +2,11 @@ package com.example.final_project_mobile.di
 
 import com.example.final_project_mobile.navigation.FlowNavigatorHolderQualifier
 import com.example.final_project_mobile.navigation.FlowRouter
+import com.example.final_project_mobile.onboarding.OnboardingManager
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val navigationModule = module {
@@ -21,4 +23,9 @@ val navigationModule = module {
 val allModules = listOf(
     navigationModule,
     mainActivityModule,
+    homeModule,
+    collectionModule,
+    onboardingModule,
+    networkModule,
+    servicesModule,
 )

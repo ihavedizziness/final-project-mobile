@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,6 +19,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localFile = project.rootProject.file("local.properties")
+        val properties = Properties().apply {
+            load(localFile.inputStream())
+        }
+
+        buildConfigField("String", "BASE_URL", properties.getProperty("BASE_URL"))
+        buildConfigField("String", "KINOPOISK_API_KEY", properties.getProperty("KINOPOISK_API_KEY"))
     }
 
     buildTypes {
@@ -36,6 +46,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -73,4 +84,22 @@ dependencies {
 
     // reflection
     implementation(libs.kotlin.reflect)
+
+    // moshi
+    implementation(libs.bundles.moshi)
+
+    // okhttp3
+    implementation(libs.bundles.okhttp)
+
+    // retrofit
+    implementation(libs.bundles.retrofit)
+
+    // logging
+    implementation(libs.timber)
+
+    // coil
+    implementation(libs.bundles.coil)
+
+    // paging3
+    implementation(libs.bundles.paging)
 }

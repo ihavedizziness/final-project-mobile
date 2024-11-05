@@ -9,7 +9,7 @@ class OnboardingFlowFragment :
     FragmentTransactionAnimation.Fade,
     FlowContainerFragment() {
 
-    override val startDestination: Screen = BottomNavScreens.OnboardingScreen
+    override val startDestination: Screen = OnboardingScreens.OnBoardingScreen
     override val isShowingBottomNavigation: Boolean = false
     override val isRootFlowController: Boolean = true
 }

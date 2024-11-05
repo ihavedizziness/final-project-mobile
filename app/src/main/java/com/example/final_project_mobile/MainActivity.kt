@@ -18,6 +18,7 @@ import com.example.final_project_mobile.navigation.AppNavigator
 import com.example.final_project_mobile.navigation.FragmentTransactionAnimation
 import com.example.final_project_mobile.navigation.NavStackHandler
 import com.example.final_project_mobile.navigation.NavStackItem
+import com.example.final_project_mobile.onboarding.OnboardingManager
 import com.example.final_project_mobile.ui.setContentWithTheme
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
@@ -32,6 +33,8 @@ class MainActivity :
 
     override val navControllerStack: Stack<NavStackItem> = Stack()
     private val bottomNavigationCompose: ComposeView by lazy { findViewById(R.id.bottomNavigationComposeView) }
+
+    private val onBoardingManager: OnboardingManager by inject()
 
     private val navigatorHolder: NavigatorHolder by inject()
     private val navigator: Navigator by lazy { Navigation() }
@@ -48,7 +51,7 @@ class MainActivity :
             }
         }
 
-        viewModel.router.startFlow(BottomNavScreens.OnboardingScreen)
+        checkOnboarding()
         goToTab(BottomNavItem.Home)
     }
 
@@ -65,6 +68,12 @@ class MainActivity :
     override fun goToTab(tab: BottomNavItem) = onBottomNavItemSelected(item = tab)
 
     override fun getCurrentTab(): BottomNavItem = viewModel.currentBottomNavItem.value
+
+    private fun checkOnboarding() {
+        if (onBoardingManager.shouldShowOnBoarding()) {
+            viewModel.dispatch(MainViewModel.Action.ShowOnboarding)
+        }
+    }
 
     private fun onBottomNavItemSelected(item: BottomNavItem) {
         if (viewModel.currentBottomNavItem.value == item) {

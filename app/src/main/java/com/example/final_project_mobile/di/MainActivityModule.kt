@@ -9,6 +9,7 @@ val mainActivityModule = module {
     viewModel {
         MainViewModel(
             router = get(),
+            onboardingManager = get(),
         )
     }
 }

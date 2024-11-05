@@ -13,6 +13,7 @@ interface AppColors {
     val contrast: Color
     val imagePlaceholder: Color
     val hint: Color
+    val grey20: Color
 }
 
 data class AppLightColors(
@@ -21,7 +22,8 @@ data class AppLightColors(
     override val accent: Color = Color(0xFF3D3BFF),
     override val contrast: Color = Color(0xFF272727),
     override val imagePlaceholder: Color = Color(0x66B5B5C9),
-    override val hint: Color = Color(0xFF838390)
+    override val hint: Color = Color(0xFF838390),
+    override val grey20: Color = Color(0xFFF5F5F5),
 ) : AppColors
 
 object AppUnspecifiedColors : AppColors {
@@ -31,4 +33,5 @@ object AppUnspecifiedColors : AppColors {
     override val contrast: Color = Color.Unspecified
     override val imagePlaceholder: Color = Color.Unspecified
     override val hint: Color = Color.Unspecified
+    override val grey20: Color = Color.Unspecified
 }
